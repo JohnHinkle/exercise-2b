@@ -125,5 +125,3 @@ plot(bm, bs)
 ```{r}
 plot(log(bm), log(bs))
 ```
-
-
