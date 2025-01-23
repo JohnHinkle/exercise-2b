@@ -9,22 +9,121 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdowns
+# ADA Notes
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### Load in {tidyverse} and data
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+library(tidyverse)
+f <- "/Users/jeh5663/Documents/data-wrangling.csv"
+d <- read_csv(f, col_names = TRUE)
 ```
 
-## Including Plots
+### Exploring the data
 
-You can also embed plots, for example:
+#### Class
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+class(d)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+#### Structure
+
+What type of data is in each column?
+
+```{r}
+str(d)
+```
+
+#### Glimpse
+
+Similar to str(), but a bit cleaner presentation
+
+```{r}
+glimpse(d)
+```
+
+#### Head
+
+First 5 lines of data
+
+```{r}
+head(d, 5)
+```
+
+#### Tail
+
+Last 5 lines of data
+
+```{r}
+tail(d, 5)
+```
+
+#### Group Size Data Exploration
+
+Method 1 (Vector)
+
+```{r}
+gs <- d$MeanGroupSize
+class(gs)
+head(gs)
+str(gs)
+```
+
+```{r}
+head(gs + 1) # Adds 1 to each group size
+
+#na.rm = TRUE removes NA/missing values 
+mean(gs, na.rm = TRUE) # mean
+sd(gs, na.rm = TRUE) # standard deviation
+```
+
+```{r}
+sciname <- paste0(d$Genus, " ", d$Species)
+sciname <- toupper(sciname) # change all letters to uppercase
+sciname
+```
+
+```{r}
+unique(d$Genus) # pull out all unique values
+```
+
+Method 2 (Table)
+
+```{r}
+gs <- d[, "MeanGroupSize"]
+class(gs)
+head(gs)
+str(gs)
+```
+
+### In-Class Exercise
+
+#### Load {tidyverse} and data
+
+```{r}
+library(tidyverse)
+f <- "/Users/jeh5663/Documents/data-wrangling.csv"
+d <- read_csv(f, col_names = TRUE)
+```
+
+#### Create female body mass and brain size objects
+
+```{r}
+bm <- d$Body_mass_female_mean
+bs <- d$Brain_Size_Species_Mean
+```
+
+#### Un-transformed plot
+
+```{r}
+plot(bm, bs)
+```
+
+#### Log transformed plot
+
+```{r}
+plot(log(bm), log(bs))
+```
+
+
